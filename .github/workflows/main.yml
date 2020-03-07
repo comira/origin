@@ -16,6 +16,10 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    
+    strategy:
+          matrix:
+            node-version: [10.x, 12.x]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -45,16 +49,27 @@ jobs:
     #  with:
     #    repository: 'comira/dist'
     #    path: dist
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    
     - name: LS
       run: |
         echo 
         ls ./
         ls ./src/
         ls ./dist/
+    - name: gen
+      uses: comira/gen@master
+      with:
+        src: ./src/
+        dist:  ./dist/
     - name: mkFile
       run: |
         cd dist
-        echo "Hello World" > test.md
+        echo $(date "+%Y-%m-%d %H:%M:%S") > test.md
         ls ./
         git add .
         git commit -am "Update"
