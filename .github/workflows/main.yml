@@ -21,9 +21,12 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
+      with:
+        path: src
     - uses: actions/checkout@v2
       with:
         repository: 'comira/dist'
+        path: dist
     - name: LS
       run: ls ./
     # Runs a single command using the runners shell
