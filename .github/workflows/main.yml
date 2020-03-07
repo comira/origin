@@ -61,6 +61,9 @@ jobs:
         ls ./
         ls ./src/
         ls ./dist/
+    - name: mkdir
+      run: |
+        mkdir -p dist/asset
     - name: gen
       uses: comira/gen@master
       with:
@@ -69,7 +72,6 @@ jobs:
     - name: mkFile
       run: |
         cd dist
-        mkdir -p asset
         echo $(date "+%Y-%m-%d %H:%M:%S") > test.md
         ls ./
         git add .
