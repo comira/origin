@@ -69,6 +69,7 @@ jobs:
     - name: mkFile
       run: |
         cd dist
+        mkdir -p asset
         echo $(date "+%Y-%m-%d %H:%M:%S") > test.md
         ls ./
         git add .
