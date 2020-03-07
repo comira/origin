@@ -64,8 +64,8 @@ jobs:
     - name: gen
       uses: comira/gen@master
       with:
-        src: src
-        dist:  dist
+        src: "src"
+        dist: "dist"
     - name: mkFile
       run: |
         cd dist
