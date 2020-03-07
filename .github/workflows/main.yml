@@ -23,6 +23,21 @@ jobs:
     - uses: actions/checkout@v2
       with:
         path: src
+    
+    - name: configSSH
+      env:
+        ACTION_DEPLOY_KEY: ${{ secrets.ACTION_DEPLOY_KEY }}
+      run: |
+        mkdir -p ~/.ssh/
+        echo "$ACTION_DEPLOY_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan github.com >> ~/.ssh/known_hosts
+    
+    - name: configGit
+      run: |
+        git config --global user.email "test@github.com"
+        git config --global user.name "test"
+    
     - name: Clone
       run: |
         git clone git@github.com:comira/dist.git dist
@@ -36,18 +51,6 @@ jobs:
         ls ./
         ls ./src/
         ls ./dist/
-    - name: configSSH
-      env:
-        ACTION_DEPLOY_KEY: ${{ secrets.ACTION_DEPLOY_KEY }}
-      run: |
-        mkdir -p ~/.ssh/
-        echo "$ACTION_DEPLOY_KEY" | tr -d '\r' > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan github.com >> ~/.ssh/known_hosts
-    - name: configGit
-      run: |
-        git config --global user.email "test@github.com"
-        git config --global user.name "test"
     - name: mkFile
       run: |
         cd dist
