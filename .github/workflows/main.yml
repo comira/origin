@@ -33,12 +33,10 @@ jobs:
         ls ./
         ls ./src/
         ls ./dist/
-    - name: Config
-      run: |
-        git config user.email "test@github.com"
     - name: mkFile
       run: |
         cd dist
+        git config user.email "test@github.com"
         echo "Hello World" > test.md
         ls ./
         git add .
